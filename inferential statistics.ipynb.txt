@@ -1,0 +1,487 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9effef94",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a9ae4395",
+   "metadata": {},
+   "source": [
+    "# Generate sample data:heights of 30 Students(in inches)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4ffefc1a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "np.random.seed(42)\n",
+    "heights=np.random.normal(loc=65 ,scale=3, size=30)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "93fb99a3",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([66.49014246, 64.5852071 , 66.94306561, 69.56908957, 64.29753988,\n",
+       "       64.29758913, 69.73763845, 67.30230419, 63.59157684, 66.62768013,\n",
+       "       63.60974692, 63.60281074, 65.72588681, 59.26015927, 59.8252465 ,\n",
+       "       63.31313741, 61.96150664, 65.942742  , 62.27592777, 60.7630889 ,\n",
+       "       69.39694631, 64.3226711 , 65.20258461, 60.72575544, 63.36685183,\n",
+       "       65.33276777, 61.54701927, 66.12709406, 63.19808393, 64.12491875])"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "heights"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "be0c9bd1",
+   "metadata": {},
+   "source": [
+    "# point estimation:calculate the sample mean"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "8e5a7f7c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Sample Mean (point Estimation): 64.43555931244688\n"
+     ]
+    }
+   ],
+   "source": [
+    "sample_mean=np.mean(heights)\n",
+    "print(\"Sample Mean (point Estimation):\",sample_mean)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "e841a2e1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import scipy.stats as stats"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6e2f593a",
+   "metadata": {},
+   "source": [
+    "# Generate sample data: heights of students(in inches)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "ec350d66",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "np.random.seed()\n",
+    "heights=np.random.normal(loc=65 ,scale=3, size=30)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "583db5f3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sample_mean=np.mean(heights)\n",
+    "sample_std=np.std(heights,ddof=1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "81913e42",
+   "metadata": {},
+   "source": [
+    "# set desired confidence level"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "51184292",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "confidence_level=0.95"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "aeef95be",
+   "metadata": {},
+   "source": [
+    "# Calculate the margin of error"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "59a1acd3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "margin_of_error=stats.t.ppf((1+confidence_level)/2,len(heights)-1)*(sample_std/np.sqrt(len(heights)))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9a919409",
+   "metadata": {},
+   "source": [
+    "# Calculate the confidence interval"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "06ed7274",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lower_bound=sample_mean-margin_of_error\n",
+    "upper_bound=sample_mean+margin_of_error"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a796c652",
+   "metadata": {},
+   "source": [
+    "#  Print the confidece interval                                                        "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "c5fc267d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Confidence Interval (95.0%):[63.54485112388161,65.82867955778491\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(f\"Confidence Interval ({confidence_level*100}%):[{lower_bound},{upper_bound}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8f3a2844",
+   "metadata": {},
+   "source": [
+    "# Hypothesis T Test"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "2f00f83f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "c0e86a8b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from scipy import stats"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9e91fe3f",
+   "metadata": {},
+   "source": [
+    "# Generate sample data for two groups"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "c4f79b46",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "np.random.seed(42)\n",
+    "group1_scores=np.random.normal(loc=70,scale=5,size=30)\n",
+    "group2_scores=np.random.normal(loc=75,scale=5,size=30)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "22fe8703",
+   "metadata": {},
+   "source": [
+    "# performance independent T-test"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "de7f1590",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "t_statistic,p_value= stats.ttest_ind(group1_scores,group2_scores)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "1c47ef41",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "alpha=0.05"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "47fe6abf",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "T-test Results:\n",
+      "T-statistic: -4.512913234547576\n",
+      "P-value: 3.176506547469916e-05\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"T-test Results:\")\n",
+    "print(\"T-statistic:\",t_statistic)\n",
+    "print(\"P-value:\",p_value)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d8da172f",
+   "metadata": {},
+   "source": [
+    "# Check if the p-value is less than alpha to determine significance"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "eb1c31f6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Reject the null hypotheis.there is a significance difference between the means of the two groups\n"
+     ]
+    }
+   ],
+   "source": [
+    "if p_value<alpha:\n",
+    "    print(\"Reject the null hypotheis.there is a significance difference between the means of the two groups\")\n",
+    "else:\n",
+    "        print(\"fail to reject the null hypothesis .there is no a significance difference betwen the means of the two groups\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ffec8c3e",
+   "metadata": {},
+   "source": [
+    "# perform two-tailed t-test"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "f70bb74a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "t_statistic_2tail,p_value_2tail= stats.ttest_ind(group1_scores,group2_scores,alternative='greater')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "86bd2ee6",
+   "metadata": {},
+   "source": [
+    "# perform one-tailed t-test(left-tailed)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "id": "933b0879",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "t_statistic_1tail_left,p_value_1tail_left=stats.ttest_ind(group1_scores,group2_scores,alternative='greater')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "828f18f7",
+   "metadata": {},
+   "source": [
+    "# print two-tailed test result"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "58168ebb",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Two-tailed Test:\n",
+      "T-statistic: -4.512913234547576\n",
+      "P-value: 0.9999841174672627\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"Two-tailed Test:\")\n",
+    "print(\"T-statistic:\",t_statistic_2tail)\n",
+    "print(\"P-value:\",p_value_2tail)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a94ef49d",
+   "metadata": {},
+   "source": [
+    "# print one-tailed test resulte"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "c2533dd8",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "one-tailed Test (left-tailed):\n",
+      "T-statistic: -4.512913234547576\n",
+      "P-value: 0.9999841174672627\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(\"\\none-tailed Test (left-tailed):\")\n",
+    "print(\"T-statistic:\",t_statistic_1tail_left)\n",
+    "print(\"P-value:\",p_value_1tail_left)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "27b7f562",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "066f8886",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b181254e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cf6e3ce1",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
